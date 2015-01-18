@@ -1,0 +1,30 @@
+Konsolia on vaikea kopioida sen jälkeen kun on laittanut monta komentoa. Tässä kommennot kuitenkin ulkomuistista, mutta loppupään komennot on pastattu. Jatkossa laitan kaikki komennot muistiin.
+
+Brewery.create name: 'BrewDog', year: 2007
+b = Brewery.find_by name: 'BrewDog'
+b.beers.create name: 'Punk IPA', style: 'IPA'
+b.beers.create name: 'Nanny State', style: 'lowalcohol'
+r = b.beers.find_by name: 'Nanny State'
+r.ragins.create score: 10 
+r.ragins.create score: 23
+r.ragins.create score: 27
+r.ragins.create score: 12
+
+irb(main):025:0> r = b.beers.find_by name: 'Punk IPA'
+  Beer Load (2.6ms)  SELECT  "beers".* FROM "beers" WHERE "beers"."brewery_id" = ? AND "beers"."name" = ? LIMIT 1  [["brewery_id", 9], ["name", "Punk IPA"]]
+=> #<Beer id: 18, name: "Punk IPA", style: "IPA", brewery_id: 9, created_at: "2015-01-18 09:56:33", updated_at: "2015-01-18 09:56:33">
+irb(main):026:0> r.ratings.create score: 10
+   (0.1ms)  begin transaction
+  SQL (3.3ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["score", 10], ["beer_id", 18], ["created_at", "2015-01-18 10:00:17.897698"], ["updated_at", "2015-01-18 10:00:17.897698"]]
+   (12.8ms)  commit transaction
+=> #<Rating id: 8, score: 10, beer_id: 18, created_at: "2015-01-18 10:00:17", updated_at: "2015-01-18 10:00:17">
+irb(main):027:0> r.ratings.create score: 20
+   (0.1ms)  begin transaction
+  SQL (4.4ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["score", 20], ["beer_id", 18], ["created_at", "2015-01-18 10:00:22.476965"], ["updated_at", "2015-01-18 10:00:22.476965"]]
+   (13.6ms)  commit transaction
+=> #<Rating id: 9, score: 20, beer_id: 18, created_at: "2015-01-18 10:00:22", updated_at: "2015-01-18 10:00:22">
+irb(main):028:0> r.ratings.create score: 30
+   (0.1ms)  begin transaction
+  SQL (4.4ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["score", 30], ["beer_id", 18], ["created_at", "2015-01-18 10:00:24.479783"], ["updated_at", "2015-01-18 10:00:24.479783"]]
+   (10.8ms)  commit transaction
+=> #<Rating id: 10, score: 30, beer_id: 18, created_at: "2015-01-18 10:00:24", updated_at: "2015-01-18 10:00:24">
