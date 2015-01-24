@@ -15,6 +15,7 @@ class BeersController < ApplicationController
   # GET /beers/new
   def new
     @beer = Beer.new
+    @breweries = Brewery.all
   end
 
   # GET /beers/1/edit
@@ -24,17 +25,8 @@ class BeersController < ApplicationController
   # POST /beers
   # POST /beers.json
   def create
-    @beer = Beer.new(beer_params)
-
-    respond_to do |format|
-      if @beer.save
-        format.html { redirect_to @beer, notice: 'Beer was successfully created.' }
-        format.json { render :show, status: :created, location: @beer }
-      else
-        format.html { render :new }
-        format.json { render json: @beer.errors, status: :unprocessable_entity }
-      end
-    end
+    Beer.create params.require(:beer).permit(:name, :style, :brewery_id)
+    redirect_to beers_path
   end
 
   # PATCH/PUT /beers/1
