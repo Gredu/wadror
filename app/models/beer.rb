@@ -12,4 +12,8 @@ class Beer < ActiveRecord::Base
         # return "Has " + ratings.count.to_s + " ratings, average " + average.to_s
         ratings.average :score
     end
+
+    def to_s
+        "#{name} #{brewery.name}"
+    end
 end
