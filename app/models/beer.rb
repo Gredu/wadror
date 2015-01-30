@@ -14,6 +14,11 @@ class Beer < ActiveRecord::Base
         ## return "Has " + ratings.count.to_s + " ratings, average " + average.to_s
         #ratings.average :score
     #end
+    
+    def average
+        return 0 if ratings.empty?
+        ratings.map{ |r| r.score }.sum / ratings.count.to_f
+    end
 
     def to_s
         "#{name} #{brewery.name}"

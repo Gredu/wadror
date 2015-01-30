@@ -1,13 +1,19 @@
 Rails.application.routes.draw do
+  resources :users
+
   resources :beers
 
   resources :breweries
+
+  resource :session, only: [:new, :create, :delete]
 
   root 'breweries#index'
 
   get 'kaikki_bisset', to: 'beers#index'
 
   post 'beers', to: 'beers#create'
+
+  get 'signup', to: 'users#new'
 
   # get 'ratings', to: 'ratings#index'
   # get 'ratings/new', to: 'ratings#new'
