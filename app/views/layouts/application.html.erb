@@ -12,7 +12,7 @@
         <%= link_to 'beers', beers_path %>
         <%= link_to 'ratings', ratings_path %>
         <% if not current_user.nil? %>
-            <%= link_to "#{current_user.username}", ratings_path %>
+            <%= link_to "#{current_user.username}", user_path(current_user.id) %>
             <%= link_to 'signout', signout_path, method: :delete %>
         <% else %>
             <%= link_to "login", signin_path %>
