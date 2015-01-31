@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
         session[:user_id] = nil
 
         # uudelleen ohjataan sovelluksen pääsivulle
-        redirec_to :root
+        redirect_to :root
     end
 
 end
