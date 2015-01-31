@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :users
   resources :breweries
+  resources :beers
   resource :session, only: [:new, :create, :delete]
 
   root 'breweries#index'
@@ -12,7 +13,6 @@ Rails.application.routes.draw do
   delete 'signout', to: 'sessions#destroy'
 
   post 'beers', to: 'beers#create'
-
 
   # get 'ratings', to: 'ratings#index'
   # get 'ratings/new', to: 'ratings#new'
