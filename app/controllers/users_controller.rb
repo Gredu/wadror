@@ -52,15 +52,15 @@ class UsersController < ApplicationController
   # end
 
   def update
-      user = User.find params[:id]
-      if current_user == @user
-          user.delete 
-          session[:user_id] = nil
-          bad_rating = Rating.all.select { |s| s.user.nil? }
-          bad_rating.each { |e| e.delete }
-          redirect_to :root
+      respond_to do |format|
+          if user_params[:username].nil? and @user == current_user and @user.update(user_params)
+              format.html { redirect_to @user, notice: 'User was successfully updated.' }
+              format.json { head :no_content }
+          else
+              format.html { render action: 'edit' }
+              format.json { render json: @user.errors, status: :unprocessable_entity }
+          end
       end
-      redirect_to :back
   end
 
   def destroy
