@@ -2,7 +2,8 @@ class User < ActiveRecord::Base
     include RatingAverage
 
     # validates :username, length: { minimum: 3 }
-    has_many :ratings  # käyttäjällä on monta ratingia
+    # käyttäjällä on monta ratingia
+    has_many :ratings, dependent: :destroy
     has_many :beers, through: :ratings
     has_secure_password
 

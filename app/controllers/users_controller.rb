@@ -56,6 +56,8 @@ class UsersController < ApplicationController
       if current_user == @user
           user.delete 
           session[:user_id] = nil
+          bad_rating = Rating.all.select { |s| s.user.nil? }
+          bad_rating.each { |e| e.delete }
           redirect_to :root
       end
       redirect_to :back
@@ -66,6 +68,8 @@ class UsersController < ApplicationController
       if current_user == @user
           user.delete 
           session[:user_id] = nil
+          bad_rating = Rating.all.select { |s| s.user.nil? }
+          bad_rating.each { |e| e.delete }
           redirect_to :root
       else
           redirect_to :back
