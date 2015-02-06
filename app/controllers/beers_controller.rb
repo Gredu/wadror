@@ -24,10 +24,24 @@ class BeersController < ApplicationController
 
   # POST /beers
   # POST /beers.json
+  # def create
+    # Beer.create params.require(:beer).permit(:name, :style, :brewery_id)
+    # set_breweries_and_styles_for_template
+    # # redirect_to beers_path
+    # redirect_to new_beer_path
+  # end
+
   def create
-    Beer.create params.require(:beer).permit(:name, :style, :brewery_id)
-    set_breweries_and_styles_for_template
-    redirect_to beers_path
+      @beer = Beer.new(beer_params)
+      respond_to do |format|
+          if @beer.save
+              format.html { redirect_to beers_path, notice: 'Beer was successfully created.' }
+              format.json { render :show, status: :created, location: @beer }
+          else
+              format.html { render :new }
+              format.json { render json: @beer.errors, status: :unprocessable_entity }
+          end
+      end
   end
 
   # PATCH/PUT /beers/1
@@ -68,4 +82,5 @@ class BeersController < ApplicationController
     def set_breweries_and_styles_for_template
         @breweries = Brewery.all
         @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter"]
+    end
 end
