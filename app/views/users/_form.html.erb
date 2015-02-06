@@ -18,11 +18,7 @@
       </div>
   <% end %>
   <div class="field">
-      <% if @user.new_record? %>
-          <%= f.label "New password" %><br \>
-      <% else %>
-          <%= f.label :password %><br \>
-      <% end %>
+      <%= f.label :password %><br \>
       <%= f.password_field :password %>
   </div>
   <div class="field">
