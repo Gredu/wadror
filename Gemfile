@@ -48,6 +48,7 @@ group :development, :test do
 
   gem 'better_errors'
   gem 'rspec-rails', '~> 3.0'
+  gem 'factory_girl_rails'
 end
 
 group :production do

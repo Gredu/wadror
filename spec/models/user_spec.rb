@@ -13,8 +13,21 @@ RSpec.describe User, type: :model do
         expect(User.count).to eq(0)
     end
 
+    it 'is is not saved with too short password' do
+        user = User.create username:"lyhyt", password:"sa", password_confirmation:"sa"
+        expect(user).not_to be_valid
+        expect(User.count).to eq(0)
+    end
+
+    it 'is is not saved with password containings only characters' do
+        user = User.create username:"vainkirjaimia", password:"saapuvaa", password_confirmation:"saapuvaa"
+        expect(user).not_to be_valid
+        expect(User.count).to eq(0)
+    end
+
     describe "with a proper password" do
-        let(:user){ User.create username:"Pekka", password:"Secret1", password_confirmation:"Secret1" }
+        # let(:user){ User.create username:"Pekka", password:"Secret1", password_confirmation:"Secret1" }
+        let!(:user){ FactoryGirl.create(:user) }
 
         it "is saved" do
             expect(user).to be_valid
@@ -22,11 +35,14 @@ RSpec.describe User, type: :model do
         end
 
         it "and with two ratings, has the correct average rating" do
-            rating = Rating.new score:10
-            rating2 = Rating.new score:20
+            # rating = Rating.new score:10
+            # rating2 = Rating.new score:20
 
-            user.ratings << rating
-            user.ratings << rating2
+            user.ratings << FactoryGirl.create(:rating)
+            user.ratings << FactoryGirl.create(:rating2)
+
+            # user.ratings << rating
+            # user.ratings << rating2
 
             expect(user.ratings.count).to eq(2)
             expect(user.average_rating).to eq(15.0)
