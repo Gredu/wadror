@@ -29,12 +29,10 @@ RSpec.describe User, type: :model do
         let(:user){ FactoryGirl.create(:user) }
 
         it 'has method for determing the favorite_beer' do
-            user = FactoryGirl.create(:user)
             expect(user).to respond_to(:favorite_beer)
         end
 
         it 'without ratings does not have a favorite beer' do
-            user = FactoryGirl.create(:user)
             expect(user.favorite_beer).to eq(nil)
         end
 
@@ -62,7 +60,17 @@ RSpec.describe User, type: :model do
 
             # expect(user.favorite_beer).to eq(beer2)
             expect(user.favorite_beer).to eq(best)
+        end
+    end
 
+    describe 'favorite style' do
+        let(:user){ FactoryGirl.create(:user) }
+
+        it 'has method for determing the favorite_style' do
+            expect(user).to respond_to(:favorite_style)
+        end
+
+        it 'is the one with the highest average ratings on several styles' do
         end
     end
 

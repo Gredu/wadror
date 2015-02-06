@@ -22,4 +22,9 @@ class User < ActiveRecord::Base
         ratings.order(score: :desc).limit(1).first.beer
     end
 
+    def favorite_style
+        # get all styles seperately, count 
+        ratings.username
+    end
+
 end
