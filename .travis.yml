@@ -1,5 +1,3 @@
-language: ruby
-
 rvm:
 - 2.2.0
 
@@ -11,5 +9,9 @@ script:
 
 deploy:
   provider: heroku
-  api_key: 4e296476-2f97-4e35-9c0d-08c916bd62dd
+  api_key:
+    secure: dKSzVXR1JLPTHuBdScW+eei6YGh1sVXbelYGvzyU9z92X+O6f9fFvRqqVe5lmqJHLh/i33T23jrD5Sxa3rZzzdf6qq9Pvfpim4ZnelO928WG7wUj/+oAatcmblKlQpSOqVZR52oerSjFzHRSAqU5jO8OLeLb9n7amdV0qU0qxcA=
+  app: nameless-badlands-9158
+  on:
+    repo: Gredu/wadror
   run: "rake db:migrate"
