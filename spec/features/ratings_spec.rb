@@ -8,6 +8,7 @@ describe 'Rating' do
     let!(:beer2) { FactoryGirl.create :beer, name:"Karhu", brewery:brewery }
     let!(:user) { FactoryGirl.create :user }
 
+
     before :each do
         sign_in(username: 'Pekka', password: 'Foobar1')
     end
@@ -25,4 +26,23 @@ describe 'Rating' do
         expect(beer1.ratings.count).to eq(1)
         expect(beer1.average_rating).to eq(15.0)
     end
+
+    describe 'Rating counts' do 
+        let!(:brewery) { FactoryGirl.create :brewery, name:'Koff' }
+        let!(:beer1) { FactoryGirl.create :beer, name:"iso 3", brewery:brewery }
+        let!(:user) { FactoryGirl.create :user }
+        let!(:rating) { FactoryGirl.create :fullRating, beer: beer1, user: user }
+        # user.ratings << FactoryGirl.create(:rating)
+        it 'shows rating count 1 when there is one rating' do
+            visit ratings_path
+            expect(page).to have_content 'Number of ratings: 1'
+        end
+    end
+
+    # Tee testi joka varmistaa, että tietokannassa olevat reittaukset ja niiden lukumäärä näytetään sivulla ratings. Jos lukumäärää ei toteutuksessani näytetä, korjaa puute.
+
+    # Vihje*: voit tehdä testin esim. siten, että luot aluksi FactoryGirlillä reittauksia tietokantaan. Tämän jälkeen voit testata capybaralla sivun ratings sisältöä.
+
+    # Muista ongelmatilanteissa komento save_and_open_page!
+
 end
