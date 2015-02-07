@@ -8,7 +8,6 @@ describe 'Rating' do
     let!(:beer2) { FactoryGirl.create :beer, name:"Karhu", brewery:brewery }
     let!(:user) { FactoryGirl.create :user }
 
-
     before :each do
         sign_in(username: 'Pekka', password: 'Foobar1')
     end
@@ -28,9 +27,6 @@ describe 'Rating' do
     end
 
     describe 'Rating counts' do 
-        let!(:brewery) { FactoryGirl.create :brewery, name:'Koff' }
-        let!(:beer1) { FactoryGirl.create :beer, name:"iso 3", brewery:brewery }
-        let!(:user) { FactoryGirl.create :user }
         let!(:user1) { FactoryGirl.create :user, username: 'Matti' }
         let!(:user2) { FactoryGirl.create :user, username: 'Mikko' }
         let!(:rating1) { FactoryGirl.create :fullRating, beer: beer1, user: user }
@@ -56,7 +52,6 @@ describe 'Rating' do
 
         it "should not show other user's ratings, when user has no ratings" do
             visit user_path(user1)
-            puts page.html
             expect(page).to have_content 'has not yet rated any beers'
         end
 
@@ -67,5 +62,74 @@ describe 'Rating' do
     end
 
     describe 'When user is deleted' do
+        let!(:brewery) { FactoryGirl.create :brewery, name:'Koff' }
+        let!(:beer1) { FactoryGirl.create :beer, name:"iso 3", brewery:brewery }
+        # let!(:pekka) { FactoryGirl.create :user }
+        let!(:matti) { FactoryGirl.create :user, username: 'Matti' }
+        let!(:mikko) { FactoryGirl.create :user, username: 'Mikko' }
+        let!(:rating1) { FactoryGirl.create :fullRating, beer: beer1, user: user }
+        let!(:rating2) { FactoryGirl.create :fullRating, beer: beer1, user: matti }
+        let!(:rating3) { FactoryGirl.create :fullRating, beer: beer1, user: matti }
+        let!(:rating4) { FactoryGirl.create :fullRating, beer: beer1, user: mikko }
+        let!(:rating5) { FactoryGirl.create :fullRating, beer: beer1, user: mikko }
+        let!(:rating6) { FactoryGirl.create :fullRating, beer: beer1, user: mikko }
+
+        it "should have three users, before deletion" do
+            visit users_path
+            expect(page).to have_content 'Listing Users'
+            expect(page).to have_content 'Pekka'
+            expect(page).to have_content 'Matti'
+            expect(page).to have_content 'Mikko'
+        end
+
+        it "Pekka should have one rating, before deletion" do
+            visit user_path(user)
+            expect(page).to have_content 'has made 1 rating'
+        end
+
+        it "Matti should have two rating, before deletion" do
+            visit user_path(matti)
+            expect(page).to have_content 'has made 2 rating'
+        end
+
+        it "Mikko should have three rating, before deletion" do
+            visit user_path(mikko)
+            expect(page).to have_content 'has made 3 rating'
+        end
+
+        it "should have total ratings of 6 before deletion" do
+            visit ratings_path
+            expect(page).to have_content 'Number of ratings: 6'
+        end
+
+        it "Pekka should have 0 ratings after deleting one rating" do
+            visit user_path(user)
+            
+            expect{
+                click_on 'delete'
+            }.to change{ Rating.count }.from(6).to(5)
+            expect(current_path).to eq(user_path(user))
+            visit ratings_path
+            expect(page).to have_content 'Number of ratings: 5'
+        end
+
+        it "should delete one of Mikko's ratings" do
+            sign_in(username: 'Mikko', password: 'Foobar1')
+            visit user_path(mikko)
+
+            expect(page).to have_content 'has made 3 ratings'
+            expect{
+                first(:link, "delete").click
+            }.to change{ Rating.count }.from(6).to(5)
+            expect{
+                first(:link, "delete").click
+            }.to change{ Rating.count }.from(5).to(4)
+            expect{
+                first(:link, "delete").click
+            }.to change{ Rating.count }.from(4).to(3)
+            expect(page).to have_content 'has not yet rated any beers'
+        end
+
+        # sign_in(username: 'Pekka', password: 'Foobar1')
     end
 end
