@@ -31,18 +31,41 @@ describe 'Rating' do
         let!(:brewery) { FactoryGirl.create :brewery, name:'Koff' }
         let!(:beer1) { FactoryGirl.create :beer, name:"iso 3", brewery:brewery }
         let!(:user) { FactoryGirl.create :user }
-        let!(:rating) { FactoryGirl.create :fullRating, beer: beer1, user: user }
+        let!(:user1) { FactoryGirl.create :user, username: 'Matti' }
+        let!(:user2) { FactoryGirl.create :user, username: 'Mikko' }
+        let!(:rating1) { FactoryGirl.create :fullRating, beer: beer1, user: user }
+        let!(:rating2) { FactoryGirl.create :fullRating, beer: beer1, user: user2 }
+        let!(:rating3) { FactoryGirl.create :fullRating, beer: beer1, user: user2 }
         # user.ratings << FactoryGirl.create(:rating)
-        it 'shows rating count 1 when there is one rating' do
+        it 'shows rating count when there is three ratings' do
             visit ratings_path
-            expect(page).to have_content 'Number of ratings: 1'
+            expect(page).to have_content 'Number of ratings: 3'
+        end
+
+        it 'shows only own ratings user has done, which should be 1' do
+            visit user_path(user)
+            expect(page).to have_content user.username
+            expect(page).to have_content 'has made 1 rating'
+        end
+
+        it "shows user's rating (incremented by 1), which should be 2" do
+            FactoryGirl.create :fullRating, beer: beer1, user: user
+            visit user_path(user)
+            expect(page).to have_content 'has made 2 ratings'
+        end
+
+        it "should not show other user's ratings, when user has no ratings" do
+            visit user_path(user1)
+            puts page.html
+            expect(page).to have_content 'has not yet rated any beers'
+        end
+
+        it "should show Matti's ratings, which should be 2" do
+            visit user_path(user2)
+            expect(page).to have_content 'has made 2 ratings'
         end
     end
 
-    # Tee testi joka varmistaa, että tietokannassa olevat reittaukset ja niiden lukumäärä näytetään sivulla ratings. Jos lukumäärää ei toteutuksessani näytetä, korjaa puute.
-
-    # Vihje*: voit tehdä testin esim. siten, että luot aluksi FactoryGirlillä reittauksia tietokantaan. Tämän jälkeen voit testata capybaralla sivun ratings sisältöä.
-
-    # Muista ongelmatilanteissa komento save_and_open_page!
-
+    describe 'When user is deleted' do
+    end
 end
