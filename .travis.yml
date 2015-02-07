@@ -11,5 +11,6 @@ script:
 
 deploy:
   provider: heroku
+  api_key: 4e296476-2f97-4e35-9c0d-08c916bd62dd
   secure: exEuLgvmIMaMw83yOrTSkHp6FtfY0Yp/jftZdVINkdZgyCUSDHgnHmbSMZOHraA/l7/7GvBuJYv/akvUUzLb2mA5QE/psbJnAjVl91x5FUbmFwan7PuFytlWNm7sDz894+Idk5PFfwIl27pOWN5JmjYg8Ss8y+Z7J/fu31OvjqM=
   run: "rake db:migrate"
