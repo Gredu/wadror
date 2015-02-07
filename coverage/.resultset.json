@@ -233,14 +233,13 @@
         1,
         null,
         1,
-        160,
+        161,
         133,
         null,
         null,
         null
       ],
       "/cs/fs2/home/greatman/Documents/school/Ruby on Rails Web-palvelin ohjelmointi/ratebeer/app/controllers/breweries_controller.rb": [
-        1,
         1,
         1,
         null,
@@ -302,13 +301,6 @@
         0,
         0,
         null,
-        null,
-        null,
-        1,
-        1,
-        0,
-        0,
-        0,
         null,
         null,
         null,
@@ -470,6 +462,6 @@
         null
       ]
     },
-    "timestamp": 1423312031
+    "timestamp": 1423322159
   }
 }
