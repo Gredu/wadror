@@ -6,6 +6,7 @@ describe 'Beer' do
     before :each do
         FactoryGirl.create :user
         FactoryGirl.create :brewery
+        sign_in(username: 'Pekka', password: 'Foobar1')
     end
 
     it 'has right content when visiting beer creation site' do
