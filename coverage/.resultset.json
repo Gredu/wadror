@@ -439,21 +439,21 @@
       "/cs/fs2/home/greatman/Documents/school/Ruby on Rails Web-palvelin ohjelmointi/ratebeer/lib/beermapping_api.rb": [
         1,
         1,
-        0,
+        3,
         null,
-        0,
-        0,
+        3,
+        3,
         null,
-        0,
+        3,
         null,
-        0,
-        0,
-        0,
+        2,
+        2,
+        10,
         null,
         null,
         null,
         1,
-        0,
+        3,
         null,
         null
       ],
@@ -516,6 +516,6 @@
         null
       ]
     },
-    "timestamp": 1423839925
+    "timestamp": 1423842098
   }
 }
