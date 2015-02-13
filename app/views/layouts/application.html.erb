@@ -11,12 +11,13 @@
         <%= link_to 'breweries', breweries_path %>
         <%= link_to 'beers', beers_path %>
         <%= link_to 'ratings', ratings_path %>
+        <%= link_to 'places', places_path%>
         <% if not current_user.nil? %>
             <%= link_to "#{current_user.username}", user_path(current_user.id) %>
             <%= link_to 'signout', signout_path, method: :delete %>
         <% else %>
             <%= link_to "login", signin_path %>
-            <%= link_to 'register', new_user_path%>
+            <%= link_to 'register', new_user_path %>
         <% end %>
     </div>
 

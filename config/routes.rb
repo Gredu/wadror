@@ -9,10 +9,12 @@ Rails.application.routes.draw do
   get 'kaikki_bisset', to: 'beers#index'
   get 'signup', to: 'users#new'
   get 'signin', to: 'sessions#new'
+  get 'places', to: 'places#index'
 
   delete 'signout', to: 'sessions#destroy'
 
   post 'beers', to: 'beers#create'
+  post 'places', to: 'places#search'
 
   # get 'ratings', to: 'ratings#index'
   # get 'ratings/new', to: 'ratings#new'
