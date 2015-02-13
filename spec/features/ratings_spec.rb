@@ -129,7 +129,6 @@ describe 'Rating' do
             }.to change{ Rating.count }.from(4).to(3)
             expect(page).to have_content 'has not yet rated any beers'
         end
-
-        # sign_in(username: 'Pekka', password: 'Foobar1')
     end
+
 end
