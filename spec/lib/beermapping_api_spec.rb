@@ -27,7 +27,6 @@ describe 'BeermappingApi' do
         places = BeermappingApi.places_in('noplace')
 
         expect(places.size).to eq(0)
-        place = places.first
     end
 
     it 'When HTTP GET retuns many entry, it is parsed and returned' do
