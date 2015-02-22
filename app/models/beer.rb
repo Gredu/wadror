@@ -19,6 +19,10 @@ class Beer < ActiveRecord::Base
         #ratings.average :score
     #end
     
+    def self.top(n)
+        sorted_by_rating_in_desc_order = Beer.all.sort_by{ |b| -(b.average_rating||0) }.take n
+    end
+
     def average
         return 0 if ratings.empty?
         ratings.map{ |r| r.score }.sum / ratings.count.to_f
@@ -27,4 +31,5 @@ class Beer < ActiveRecord::Base
     def to_s
         "#{name} #{brewery.name}"
     end
+
 end

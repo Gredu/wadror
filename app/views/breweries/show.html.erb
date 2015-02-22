@@ -1,14 +1,17 @@
 <p id="notice"><%= notice %></p>
 
 <h2><%= @brewery.name %></h2>
+  <% if not @brewery.active  %>
+      <span class="label label-info">retired</span>
+  <% end %>
 
 <p><em> Established in <%= @brewery.year %></em></p>
 
 <p> Number of beers <%= @brewery.beers.count %></p>
 
 <p>
-<% @brewery.beers.each do |brewery| %>
-    <%= link_to "#{brewery.name}", brewery_path  %>
+<% @brewery.beers.each do |beer| %>
+    <%= link_to beer.name, beer  %>
 <% end %>
 </p>
 
@@ -18,5 +21,8 @@
     <p><%= "Has #{@brewery.ratings.count} #{"rating".pluralize(@brewery.ratings.count)}, average #{@brewery.average_rating}" %></p>
 <% end %>
 
-
-<%= link_to 'Edit', edit_brewery_path(@brewery) %> |
+<% if not current_user.nil? %>
+    <%= link_to "change activity", toggle_activity_brewery_path(@brewery.id), method: :post, class: "btn btn-primary" %>
+  <%= link_to 'Edit', edit_brewery_path(@brewery), class:"btn btn-primary"  %>
+  <%= link_to 'Destroy', @brewery, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger"  %>
+<% end %>

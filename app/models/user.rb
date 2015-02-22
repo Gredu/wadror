@@ -27,4 +27,19 @@ class User < ActiveRecord::Base
         ratings.username
     end
 
+    def rating_of_brewery(brewery)
+        ratings_of_brewery = ratings.select do |r|
+            r.beer.brewery == brewery
+        end
+        ratings_of_brewery.map(&:score).sum / ratings_of_brewery.count
+    end
+
+    def total_ratings
+        ratings.count
+    end
+
+  def self.top(n)
+    sorted_by_rating_in_desc_order = User.all.sort_by{ |b| -(b.ratings.count||0) }.take n
+  end
+
 end

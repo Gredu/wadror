@@ -34,6 +34,11 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'capistrano-rails', group: :development
 
 gem 'httparty'
+gem 'bootstrap-sass'
+
+group :development do
+    gem 'rails_layout'
+end
 
 group :development, :test do
   # Use lighter sql when testing

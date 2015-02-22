@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources :users
-  resources :breweries
+  resources :breweries do
+      post 'toggle_activity', on: :member
+  end
   resources :beers
   resource :session, only: [:new, :create, :delete]
 

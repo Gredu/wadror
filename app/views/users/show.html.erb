@@ -3,6 +3,9 @@
 <h1>
     <%= @user.username %>
 </h1>
+    <% if @user.ban %>
+        <span class="label label-info">account frozen</span>
+    <% end %>
 <% if @user.ratings.empty? %>
     <p> has not yet rated any beers </p>
 <% else %>
@@ -22,6 +25,9 @@
     <% end %>
 </ul>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Destroy', user_path(@user.id), method: :delete, data: { confirm: 'Are you sure?' } %>
-<%= link_to 'Back', users_path %>
+<% if current_user.admin %>
+    <%= link_to 'Edit', edit_user_path(@user), class: 'btn btn-warning' %> |
+    <%= link_to 'Destroy', user_path(@user.id), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+<% end %>
+
+<%= link_to 'Back', users_path, class: 'btn btn-primary' %>

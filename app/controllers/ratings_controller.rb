@@ -1,6 +1,10 @@
 class RatingsController < ApplicationController
     def index
-        @ratings = Rating.all
+        @top_beers = Beer.top 3
+        @top_breweries = Brewery.top 3
+        @top_styles = Rating.top_breweries
+        @top_ratings = Rating.top 5
+        @top_users = User.top 3
     end
 
     def new
@@ -25,4 +29,5 @@ class RatingsController < ApplicationController
         rating.delete if current_user == rating.user
         redirect_to :back
     end
+
 end
