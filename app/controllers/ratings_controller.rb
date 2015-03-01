@@ -8,6 +8,8 @@ class RatingsController < ApplicationController
     end
 
     def new
+        redirect_to signin_path, notice: 'You should be signed in if you want to rate!' if current_user.nil?
+
         @rating = Rating.new
         @beers = Beer.all
     end
