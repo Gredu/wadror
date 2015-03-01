@@ -13,15 +13,26 @@ class BreweriesController < ApplicationController
 
     order = params[:order] || 'name'
 
+    order = 'name_reversed' if session[:last_order] == 'name'
+    order = 'year_reversed' if session[:last_order] == 'year'
+
+    session[:last_order] = order
+
     @active_breweries = case order
                         when 'name' then @active_breweries.sort_by{ |b| b.name }
                         when 'year' then @active_breweries.sort_by{ |b| b.year}
+                        when 'name_reversed' then @active_breweries.sort_by{ |b| b.name }.reverse
+                        when 'year_reversed' then @active_breweries.sort_by{ |b| -b.year}
                         end
 
     @retired_breweries = case order
-                        when 'name' then @active_breweries.sort_by{ |b| b.name }
-                        when 'year' then @active_breweries.sort_by{ |b| b.year}
+                        when 'name' then @retired_breweries.sort_by{ |b| b.name }
+                        when 'year' then @retired_breweries.sort_by{ |b| b.year}
+                        when 'name_reversed' then @retired_breweries.sort_by{ |b| b.name }.reverse
+                        when 'year_reversed' then @retired_breweries.sort_by{ |b| -b.year}
                         end
+
+
   end
 
   # GET /breweries/1
@@ -97,6 +108,5 @@ class BreweriesController < ApplicationController
     def brewery_params
       params.require(:brewery).permit(:name, :year, :active)
     end
-
 
 end
