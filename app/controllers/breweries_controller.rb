@@ -5,7 +5,7 @@ class BreweriesController < ApplicationController
   # GET /breweries
   # GET /breweries.json
   def index
-    # @breweries = Brewery.all
+    @breweries = Brewery.all
     # @active_breweries = Brewery.where(active:true)
     # @retired_breweries = Brewery.where(active:[nil, false])
     @active_breweries = Brewery.active
@@ -87,6 +87,9 @@ class BreweriesController < ApplicationController
       format.html { redirect_to breweries_url, notice: 'Brewery was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def nglist
   end
 
   def toggle_activity
