@@ -14,8 +14,8 @@ class MembershipsController < ApplicationController
 
   # GET /memberships/new
   def new
+    @beer_clubs = BeerClub.all.reject{ |b| b.members.include? current_user }
     @membership = Membership.new
-    @beer_clubs = BeerClub.all
   end
 
   # GET /memberships/1/edit
@@ -25,8 +25,8 @@ class MembershipsController < ApplicationController
   # POST /memberships
   # POST /memberships.json
   def create
-      redirect_to signin_path, notice: 'You should be signed in if you want to join a club!' if current_user.nil?
     @membership = Membership.new(membership_params)
+    @membership.user = current_user
 
     respond_to do |format|
       if @membership.save

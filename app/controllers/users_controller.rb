@@ -53,6 +53,7 @@ class UsersController < ApplicationController
       if current_user == @user
           @user.destroy
           session[:user_id] = nil
+          # depend didn't work?
           bad_rating = Rating.all.select { |s| s.user.nil? }
           bad_rating.each { |e| e.delete }
           redirect_to :root
